@@ -10,14 +10,14 @@ const turnkeyStore = store({
   selectedId: null,
   chatInput: "",
 
-  createChat(value, parentId, createdById) {
+  createChat() {
     turnkeyStore.chats.push({
       id: ids.next(),
       createdAt: Date.now(),
       modifiedAt: Date.now(),
-      parentId: parentId,
-      createdBy: createdById,
-      text: value
+      parentId: turnkeyStore.selectedId,
+      createdBy: people[0].id,
+      text: turnkeyStore.chatInput
     });
   }
 });

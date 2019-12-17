@@ -49,31 +49,26 @@ const App = () => {
 
       <hr />
       <h3>Chat</h3>
-      <ul>
-        {getChats(store.selectedId).map(chat => (
-          <li key={chat.id}>
-            <small>{chat.createdBy}</small>
-            <p>{chat.text}</p>
-          </li>
-        ))}
-      </ul>
-      <input
-        type="text"
-        placeholder="Add a comment"
-        disabled={!store.selectedId}
-        onChange={event => (store.chatInput = event.target.value)}
-      />
-      <button
-        onClick={() =>
-          store.createChat(
-            store.chatInput,
-            store.selectedId,
-            store.people[1].id
-          )
-        }
-      >
-        Send
-      </button>
+      {store.selectedId ? (
+        <div>
+          <ul>
+            {getChats(store.selectedId).map(chat => (
+              <li key={chat.id}>
+                <small>{chat.createdBy}</small>
+                <p>{chat.text}</p>
+              </li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            placeholder="Add a comment"
+            onChange={event => (store.chatInput = event.target.value)}
+          />
+          <button onClick={() => store.createChat()}>Send</button>
+        </div>
+      ) : (
+        <p>Select a person</p>
+      )}
     </div>
   );
 };
