@@ -2,13 +2,14 @@ import React from "react";
 import store from "./store";
 import { view } from "react-easy-state";
 
+const getChats = id => store.chats.filter(chat => id === chat.parentId);
+
 const App = () => {
   let selectedPerson = store.people.find(
     person => store.selectedId === person.id
   );
-  let selectedChats = store.chats.filter(
-    chat => store.selectedId === chat.parentId
-  );
+  let selectedChats = getChats(store.selectedId);
+
   return (
     <div>
       <h3>People</h3>
@@ -16,7 +17,9 @@ const App = () => {
         {store.people.map(person => (
           <li key={person.id}>
             <img src={person.image} alt="avatar" height={24} width={24} />
-            {person.firstName} {person.lastName}
+            {`${person.firstName} ${person.lastName} ${
+              getChats(person.id).length
+            }`}
             <button onClick={() => (store.selectedId = person.id)}>
               {store.selectedId === person.id ? "Selected" : "Select"}
             </button>
