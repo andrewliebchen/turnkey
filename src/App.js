@@ -63,6 +63,7 @@ const App = () => {
             type="text"
             placeholder="Add a comment"
             onChange={event => (store.chatInput = event.target.value)}
+            value={store.chatInput}
           />
           <button onClick={() => store.createChat()}>Send</button>
         </div>

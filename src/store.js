@@ -19,6 +19,7 @@ const turnkeyStore = store({
       createdBy: people[0].id,
       text: turnkeyStore.chatInput
     });
+    turnkeyStore.chatInput = "";
   }
 });
 
