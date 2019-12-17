@@ -8,7 +8,6 @@ const App = () => {
   let selectedPerson = store.people.find(
     person => store.selectedId === person.id
   );
-  let selectedChats = getChats(store.selectedId);
 
   return (
     <div>
@@ -50,17 +49,31 @@ const App = () => {
 
       <hr />
       <h3>Chat</h3>
-      {selectedChats.length > 0 && (
-        <ul>
-          {selectedChats.map(chat => (
-            <li key={chat.id}>
-              <small>{chat.createdBy}</small>
-              <p>{chat.text}</p>
-            </li>
-          ))}
-        </ul>
-      )}
-      <input type="text" placeholder="Add a comment" />
+      <ul>
+        {getChats(store.selectedId).map(chat => (
+          <li key={chat.id}>
+            <small>{chat.createdBy}</small>
+            <p>{chat.text}</p>
+          </li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        placeholder="Add a comment"
+        disabled={!store.selectedId}
+        onChange={event => (store.chatInput = event.target.value)}
+      />
+      <button
+        onClick={() =>
+          store.createChat(
+            store.chatInput,
+            store.selectedId,
+            store.people[1].id
+          )
+        }
+      >
+        Send
+      </button>
     </div>
   );
 };
