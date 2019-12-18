@@ -1,5 +1,6 @@
 import React from "react";
 import store from "./store";
+import PersonListItem from "./PersonListItem";
 import { view } from "react-easy-state";
 
 const getChats = id => store.chats.filter(chat => id === chat.parentId);
@@ -15,10 +16,7 @@ const App = () => {
       <ul>
         {store.people.map(person => (
           <li key={person.id}>
-            <img src={person.image} alt="avatar" height={24} width={24} />
-            {`${person.firstName} ${person.lastName} ${
-              getChats(person.id).length
-            }`}
+            <PersonListItem id={person.id} count={getChats(person.id).length} />
             <button onClick={() => (store.selectedId = person.id)}>
               {store.selectedId === person.id ? "Selected" : "Select"}
             </button>
@@ -42,6 +40,7 @@ const App = () => {
             Name: {selectedPerson.firstName} {selectedPerson.lastName}
           </li>
           <li>ID: {selectedPerson.id}</li>
+          <li>Type: {selectedPerson.type}</li>
         </ul>
       ) : (
         <p>Select a person</p>
@@ -54,7 +53,7 @@ const App = () => {
           <ul>
             {getChats(store.selectedId).map(chat => (
               <li key={chat.id}>
-                <small>{chat.createdBy}</small>
+                <PersonListItem id={chat.createdBy} />
                 <p>{chat.text}</p>
               </li>
             ))}

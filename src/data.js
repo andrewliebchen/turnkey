@@ -1,6 +1,9 @@
 import faker from "faker";
 import { Schema } from "faker-schema";
 import Ids from "ids";
+import sample from "@unction/sample";
+
+const personTypes = ["employee", "customer", "candidate"];
 
 const ids = new Ids();
 
@@ -10,7 +13,8 @@ const personSchema = new Schema(() => ({
   modifiedAt: Date.now(),
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
-  image: faker.image.avatar()
+  image: faker.image.avatar(),
+  type: sample(personTypes)
 }));
 
 export const people = personSchema.make(5);
