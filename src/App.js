@@ -41,6 +41,7 @@ const App = () => {
           </li>
           <li>ID: {selectedPerson.id}</li>
           <li>Type: {selectedPerson.type}</li>
+          <li>Tags: {selectedPerson.tags}</li>
         </ul>
       ) : (
         <p>Select a person</p>

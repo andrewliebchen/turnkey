@@ -4,18 +4,28 @@ import Ids from "ids";
 import sample from "@unction/sample";
 
 const personTypes = ["employee", "customer", "candidate"];
+const sampleTags = {
+  employee: ["onboarding", "engineer", "sales"],
+  candidate: ["referral", "reached out", "screen", "onsite", "hire"],
+  customer: ["new", "warm", "danger", "follow up"]
+};
 
 const ids = new Ids();
 
-const personSchema = new Schema(() => ({
-  id: ids.next(),
-  createdAt: Date.now(),
-  modifiedAt: Date.now(),
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  image: faker.image.avatar(),
-  type: sample(personTypes)
-}));
+const personSchema = new Schema(() => {
+  const type = sample(personTypes);
+  const tag = sample(sampleTags[type]);
+  return {
+    id: ids.next(),
+    createdAt: Date.now(),
+    modifiedAt: Date.now(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    image: faker.image.avatar(),
+    type: type,
+    tags: tag
+  };
+});
 
 export const people = personSchema.make(5);
 

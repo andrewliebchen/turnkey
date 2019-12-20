@@ -7,7 +7,11 @@ const PersonListItem = props => {
   return (
     <div>
       <img src={person.image} alt="avatar" height={24} width={24} />
-      {person.firstName} {person.lastName} {props.count}
+      <div>
+        {person.firstName} {person.lastName} {props.count}
+        <br />
+        <small>{person.type}</small>
+      </div>
     </div>
   );
 };
