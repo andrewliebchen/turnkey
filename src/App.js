@@ -2,6 +2,8 @@ import React from "react";
 import store from "./store";
 import PersonListItem from "./PersonListItem";
 import { view } from "react-easy-state";
+import { Text, Heading, Button, Image, Flex, Box } from "rebass";
+import { Input } from "@rebass/forms";
 
 const getChats = id => store.chats.filter(chat => id === chat.parentId);
 
@@ -11,77 +13,91 @@ const App = () => {
   );
 
   return (
-    <div>
-      <h3>People</h3>
-      <ul>
-        {store.people.map(person => (
-          <li key={person.id}>
-            <PersonListItem id={person.id} count={getChats(person.id).length} />
-            <button onClick={() => (store.selectedId = person.id)}>
-              {store.selectedId === person.id ? "Selected" : "Select"}
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      <hr />
-      <h3>Details</h3>
-      {store.selectedId ? (
-        <div>
-          <ul>
-            <li>
-              <img
-                src={selectedPerson.image}
-                alt="avatar"
-                height={48}
-                width={48}
+    <Flex flexDirection="columns" width={1}>
+      <Box width={1 / 5}>
+        <Heading>People</Heading>
+        <ul>
+          {store.people.map(person => (
+            <li key={person.id}>
+              <PersonListItem
+                id={person.id}
+                count={getChats(person.id).length}
               />
+              <Button onClick={() => (store.selectedId = person.id)}>
+                {store.selectedId === person.id ? "Selected" : "Select"}
+              </Button>
             </li>
-            <li>
-              Name: {selectedPerson.firstName} {selectedPerson.lastName}
-            </li>
-            <li>ID: {selectedPerson.id}</li>
-            <li>Type: {selectedPerson.type}</li>
-            <li>Tags: {selectedPerson.tags}</li>
-          </ul>
-          <h3>Posts</h3>
-          {store.posts
-            .filter(post => post.parentId === selectedPerson.id)
-            .map(post => (
-              <div key={post.id}>
-                <h4>{post.title}</h4>
-                <p>{post.description}</p>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <p>Select a person</p>
-      )}
-
-      <hr />
-      <h3>Chat</h3>
-      {store.selectedId ? (
-        <div>
-          <ul>
-            {getChats(store.selectedId).map(chat => (
-              <li key={chat.id}>
-                <PersonListItem id={chat.createdBy} />
-                <p>{chat.text}</p>
+          ))}
+        </ul>
+      </Box>
+      <Box width={2 / 5}>
+        <Heading>Details</Heading>
+        {store.selectedId ? (
+          <div>
+            <ul>
+              <li>
+                <Image
+                  variant="avatar"
+                  src={selectedPerson.image}
+                  alt="avatar"
+                  height={48}
+                  width={48}
+                />
               </li>
-            ))}
-          </ul>
-          <input
-            type="text"
-            placeholder="Add a comment"
-            onChange={event => (store.chatInput = event.target.value)}
-            value={store.chatInput}
-          />
-          <button onClick={() => store.createChat()}>Send</button>
-        </div>
-      ) : (
-        <p>Select a person</p>
-      )}
-    </div>
+              <li>
+                <Text>
+                  Name: {selectedPerson.firstName} {selectedPerson.lastName}
+                </Text>
+              </li>
+              <li>
+                <Text>ID: {selectedPerson.id}</Text>
+              </li>
+              <li>
+                <Text>Type: {selectedPerson.type}</Text>
+              </li>
+              <li>
+                <Text>Tags: {selectedPerson.tags}</Text>
+              </li>
+            </ul>
+            <Heading>Posts</Heading>
+            {store.posts
+              .filter(post => post.parentId === selectedPerson.id)
+              .map(post => (
+                <div key={post.id}>
+                  <Heading fontSize={2}>{post.title}</Heading>
+                  <Text>{post.description}</Text>
+                </div>
+              ))}
+          </div>
+        ) : (
+          <Text>Select a person</Text>
+        )}
+      </Box>
+      <Box width={2 / 5}>
+        <Heading>Chat</Heading>
+        {store.selectedId ? (
+          <div>
+            <ul>
+              {getChats(store.selectedId).map(chat => (
+                <li key={chat.id}>
+                  <PersonListItem id={chat.createdBy} />
+                  <Text>{chat.text}</Text>
+                </li>
+              ))}
+            </ul>
+            <Input
+              type="text"
+              placeholder="Add a comment"
+              onChange={event => (store.chatInput = event.target.value)}
+              value={store.chatInput}
+            />
+            <Button onClick={() => store.createChat()}>Send</Button>
+          </div>
+        ) : (
+          <Text>Select a person</Text>
+        )}
+      </Box>
+    </Flex>
   );
 };
 
