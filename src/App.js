@@ -27,22 +27,33 @@ const App = () => {
       <hr />
       <h3>Details</h3>
       {store.selectedId ? (
-        <ul>
-          <li>
-            <img
-              src={selectedPerson.image}
-              alt="avatar"
-              height={48}
-              width={48}
-            />
-          </li>
-          <li>
-            Name: {selectedPerson.firstName} {selectedPerson.lastName}
-          </li>
-          <li>ID: {selectedPerson.id}</li>
-          <li>Type: {selectedPerson.type}</li>
-          <li>Tags: {selectedPerson.tags}</li>
-        </ul>
+        <div>
+          <ul>
+            <li>
+              <img
+                src={selectedPerson.image}
+                alt="avatar"
+                height={48}
+                width={48}
+              />
+            </li>
+            <li>
+              Name: {selectedPerson.firstName} {selectedPerson.lastName}
+            </li>
+            <li>ID: {selectedPerson.id}</li>
+            <li>Type: {selectedPerson.type}</li>
+            <li>Tags: {selectedPerson.tags}</li>
+          </ul>
+          <h3>Posts</h3>
+          {store.posts
+            .filter(post => post.parentId === selectedPerson.id)
+            .map(post => (
+              <div key={post.id}>
+                <h4>{post.title}</h4>
+                <p>{post.description}</p>
+              </div>
+            ))}
+        </div>
       ) : (
         <p>Select a person</p>
       )}

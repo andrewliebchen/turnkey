@@ -1,5 +1,5 @@
 import { store } from "react-easy-state";
-import { people, chats } from "./data";
+import { people, chats, funnels, posts } from "./data";
 import Ids from "ids";
 
 const ids = new Ids();
@@ -7,6 +7,8 @@ const ids = new Ids();
 const turnkeyStore = store({
   people: people,
   chats: chats,
+  funnels: funnels,
+  posts: posts,
   selectedId: null,
   chatInput: "",
 

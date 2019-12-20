@@ -39,3 +39,22 @@ const chatSchema = new Schema(() => ({
 }));
 
 export const chats = chatSchema.make(3);
+
+const funnelSchema = new Schema(() => ({
+  id: ids.next(),
+  createdAt: Date.now(),
+  modifiedAt: Date.now()
+}));
+
+export const funnels = funnelSchema.make(2);
+
+const postSchema = new Schema(() => ({
+  id: ids.next(),
+  createdAt: Date.now(),
+  modifiedAt: Date.now(),
+  parentId: people[0].id,
+  title: faker.lorem.words(),
+  description: faker.lorem.paragraph()
+}));
+
+export const posts = postSchema.make(3);
